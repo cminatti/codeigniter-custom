@@ -1,6 +1,6 @@
 <?php
 
-if (!isset($_GET['pass']) || $_GET['pass'] != 'com82')
+if (!isset($_GET['pass']) || $_GET['pass'] != 'asdf')
 {
 	die('Directory access is forbidden.');	
 }
@@ -12,7 +12,7 @@ function listar_directorios_ruta($ruta){
          while (($file = readdir($dh)) !== false) {
 		if (!is_dir($ruta . $file) && $file!="." && $file!=".." && ($file!="index.php")){  
 
-			echo '<br /> <a href="logs.php?file='.urlencode($file).'&pass=com82" > '.$file.'</a> '; 
+			echo '<br /> <a href="logs.php?file='.urlencode($file).'&pass='.$_GET['pass'].'" > '.$file.'</a> '; 
             } 
          } 
       closedir($dh); 
@@ -37,11 +37,12 @@ if (isset($_GET['file']))
 	// read file and show it on the page:
 	echo '<h1> Today: '.date('Y-m-d H:i:s e O').'</h1>';
 	echo '<p>Logs del: '.$_GET['file'].'</p> ';
-	echo nl2br(file_get_contents('./application/logs/'.$_GET['file']));
+        $ruta = './application/logs/'.preg_replace('/(\.\.)|\//','',$_GET['file']);//remove evil ../ or any /
+	echo nl2br(file_get_contents($ruta));
 }
 elseif (isset($_GET['delete']))
 {
-
+    //unlink
 }
 else
 {
@@ -55,5 +56,3 @@ echo '
 	</body> 
 	</html> 
 	';
-
-?>

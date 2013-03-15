@@ -2,9 +2,17 @@
 
 class Main extends CI_Controller {
 
+        protected $header = array(); 
+
+        protected $data = array(); 
+
+        protected $footer = array(); 
+        
 	public function index()
 	{
-		$this->load->view('main');
+		$this->load->view('header', $this->header);
+                $this->load->view('home', $this->data);
+                $this->load->view('footer',  $this->footer);
 	}
 }
 
